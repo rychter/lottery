@@ -24,7 +24,7 @@ contract Lottery {
         numberFromPublic += uint32(numberSentByPublic);
     }
 
-    function addNumberFromCreato(uint numberSentByCreator) public {
+    function addNumberFromCreator(uint numberSentByCreator) public {
 
         require(msg.sender == creator);
 
