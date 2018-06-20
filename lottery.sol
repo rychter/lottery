@@ -17,6 +17,16 @@ contract Lottery {
         return this.balance;
     }
 
+    function play() public payable {
+    
+        require(msg.value >= 0.01 ether);
+        calculateReward();
+
+        msg.sender.transfer(reward);
+        creator.transfer(0.001 ether);
+   
+    }
+
 
     function addNumberFromPublic(uint numberSentByPublic) public {
         numberFromPublic += uint(msg.sender);
@@ -25,8 +35,8 @@ contract Lottery {
     }
 
     function addNumberFromCreator(uint numberSentByCreator) public {
-
-        require(msg.sender == creator);
+       
+       require(msg.sender == creator);
 
         numberFromCreator += uint(msg.sender);
         numberFromCreator += uint(msg.sig);
@@ -49,6 +59,7 @@ contract Lottery {
     function calculateReward() private {
 
         uint higestNumber = 0;
+        
         for (uint i = 0; i < 4; i++) {
 
             generateNumber(uint8(higestNumber + i + number + this.balance));
@@ -59,25 +70,14 @@ contract Lottery {
             }
 
         }
+        
         reward = div(this.balance, higestNumber);
     }
 
-    function addBalance() public payable {
-
-    }
-
-    function play() public payable {
-
-        require(msg.value >= 0.01 ether);
-        calculateReward();
-
-        msg.sender.transfer(reward);
-        creator.transfer(0.001 ether);
-
-    }
-
+    function addBalance() public payable {}
+    
     function div(uint256 a, uint256 b) internal pure returns (uint256) {
-
         return a / b;
     }
+    
 }
